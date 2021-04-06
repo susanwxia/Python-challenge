@@ -1,5 +1,7 @@
 import csv
-csvpath = "Resources\\budget_data.csv"
+import os
+csvpath = os.path.join("Resources", "budget_data.csv")
+
 with open(csvpath) as csvfile:
     csv_budget = csv.reader(csvfile)
     csv_header = next(csv_budget)
@@ -16,8 +18,7 @@ with open(csvpath) as csvfile:
         profit_change.append(change_mon)
         profit_currmon = int(row[1])
         profit_date.append(row[0])
-    print(f'Financial Analysis')
-    print(f'--------------------')
+    print(f'Financial Analysis\n----------------------')
     print(f'Total number of months: {line_count}')
     print(f'Total profit: ${profit_sum}')
     profit_avg = round(sum(profit_change)/(line_count-1),2)
@@ -30,3 +31,12 @@ with open(csvpath) as csvfile:
     min_index = profit_change.index(profit_min)
     min_date = profit_date[min_index]
     print(f'Greatest Decrease in Profits: {min_date} (${profit_min})')
+txt_output = os.path.join("Analysis", "Pybank_output.txt")
+budget_result = open(txt_output,"w")
+budget_result.write(f'Financial Analysis\n----------------------\n')
+budget_result.write(f'Total number of months: {line_count}\n')
+budget_result.write(f'Total profit: ${profit_sum}\n')
+budget_result.write(f'Total profit: ${profit_sum}\n')
+budget_result.write(f'Average change: ${profit_avg}\n')
+budget_result.write(f'Greatest Increase in Profits: {max_date} (${profit_max})\n')
+budget_result.write(f'Greatest Decrease in Profits: {min_date} (${profit_min})\n')
